@@ -77,7 +77,7 @@ class App extends React.Component {
                 author: '',
                 url: ''
             })
-            this.showNotification('Blogi lisätty', 'green')
+            this.showNotification('Blogi "' + newBlog.title + '" lisätty', 'green')
         } catch(err) {
             this.showNotification(err.message, 'red')
         }
