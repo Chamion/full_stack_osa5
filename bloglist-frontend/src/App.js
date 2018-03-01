@@ -2,6 +2,7 @@ import React from 'react'
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
 import LogoutForm from './components/LogoutForm'
+import NewBlogForm from './components/NewBlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -19,7 +20,10 @@ class App extends React.Component {
             username: '',
             password: '',
             error: null,
-            user
+            user,
+            title: '',
+            author: '',
+            url: ''
         }
     }
 
@@ -60,6 +64,30 @@ class App extends React.Component {
         })
     }
     
+    handleNewBlog = async (event) => {
+        event.preventDefault()
+        try {
+            const newBlog = await blogService.addNew({
+                title: this.state.title,
+                author: this.state.author,
+                url: this.state.url
+            }, this.state.user)
+            this.setState({
+                blogs: this.state.blogs.concat([newBlog]),
+                title: '',
+                author: '',
+                url: ''
+            })
+        } catch(err) {
+            this.setState({
+                error: err.message,
+            })
+            setTimeout(() => {
+                this.setState({ error: null })
+            }, 5000)
+        }
+    }
+    
     handleFieldChange = (event) => {
         this.setState({ [event.target.name]: event.target.value })
     }
@@ -69,6 +97,9 @@ class App extends React.Component {
             return (
                 <div>
                     <LogoutForm username={this.state.user.username} logoutHandler={this.handleLogout.bind(this)}/>
+                    <NewBlogForm newBlogHandler={this.handleNewBlog.bind(this)} 
+                    fieldChangeHandler={this.handleFieldChange.bind(this)} 
+                    />
                     <h2>blogs</h2>
                     <table>
                         <tbody>
@@ -85,8 +116,6 @@ class App extends React.Component {
                     <LoginForm loginHandler={this.handleLogin.bind(this)} 
                     passwordChangeHandler={this.handleFieldChange.bind(this)} 
                     usernameChangeHandler={this.handleFieldChange.bind(this)} 
-                    usernameValue={this.state.username} 
-                    passwordValue={this.state.password} 
                     />
                 </div>
             )
