@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
 import LogoutForm from './components/LogoutForm'
 import NewBlogForm from './components/NewBlogForm'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -19,7 +20,8 @@ class App extends React.Component {
             blogs: [],
             username: '',
             password: '',
-            error: null,
+            notification: null,
+            notificationColour: 'red',
             user,
             title: '',
             author: '',
@@ -46,13 +48,9 @@ class App extends React.Component {
                 user
             })
             localStorage.setItem('user', JSON.stringify(user))
+            this.showNotification('Sisäänkirjautuminen onnistui', 'green')
         } catch(err) {
-            this.setState({
-                error: 'käyttäjätunnus tai salasana virheellinen',
-            })
-            setTimeout(() => {
-                this.setState({ error: null })
-            }, 5000)
+            this.showNotification('käyttäjätunnus tai salasana virheellinen', 'red')
         }
     }
     
@@ -62,6 +60,7 @@ class App extends React.Component {
         this.setState({
             user: null
         })
+        this.showNotification('Uloskirjautuminen onnistui', 'green')
     }
     
     handleNewBlog = async (event) => {
@@ -78,27 +77,45 @@ class App extends React.Component {
                 author: '',
                 url: ''
             })
+            this.showNotification('Blogi lisätty', 'green')
         } catch(err) {
-            this.setState({
-                error: err.message,
-            })
-            setTimeout(() => {
-                this.setState({ error: null })
-            }, 5000)
+            this.showNotification(err.message, 'red')
         }
     }
     
     handleFieldChange = (event) => {
         this.setState({ [event.target.name]: event.target.value })
     }
+    
+    showNotification = (notification, colour) => {
+        this.setState({
+            notification,
+            notificationColour: colour
+        })
+        setTimeout(() => {
+            this.hideNotification(notification)
+        }, 5000)
+    }
+    
+    hideNotification = (notification) => {
+        if(this.state.notification === notification) {
+            this.setState({
+                notification: null
+            })
+        }
+    }
 
     render() {
+        var body
         if(this.state.user) {
-            return (
+            body = (
                 <div>
                     <LogoutForm username={this.state.user.username} logoutHandler={this.handleLogout.bind(this)}/>
                     <NewBlogForm newBlogHandler={this.handleNewBlog.bind(this)} 
                     fieldChangeHandler={this.handleFieldChange.bind(this)} 
+                    titleValue={this.state.title} 
+                    authorValue={this.state.author} 
+                    urlValue={this.state.url} 
                     />
                     <h2>blogs</h2>
                     <table>
@@ -111,7 +128,7 @@ class App extends React.Component {
                 </div>
             )
         } else {
-            return (
+            body = (
                 <div>
                     <LoginForm loginHandler={this.handleLogin.bind(this)} 
                     passwordChangeHandler={this.handleFieldChange.bind(this)} 
@@ -120,6 +137,12 @@ class App extends React.Component {
                 </div>
             )
         }
+        return (
+            <div>
+                <Notification notification={this.state.notification} colour={this.state.notificationColour} />
+                {body}
+            </div>
+        )
     }
 }
 
