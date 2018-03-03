@@ -7,12 +7,12 @@ const LogoutForm = (props) => {
     }
     return (
         <div>
-            <p>
+            <span>
                 Olet kirjautunut käyttäjänä {props.username} 
-                <form onSubmit={props.logoutHandler} style={formStyle}>
-                    <input type='submit' value='kirjaudu ulos' />
-                </form>
-            </p>
+            </span>
+            <form onSubmit={props.logoutHandler} style={formStyle}>
+                <input type='submit' value='kirjaudu ulos' />
+            </form>
         </div>
     )
 }

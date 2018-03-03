@@ -1,4 +1,6 @@
 import React from 'react'
+import blogService from '../services/blogs'
+
 class Blog extends React.Component {
     constructor(props) {
         super(props)
@@ -15,6 +17,7 @@ class Blog extends React.Component {
             cursor: 'pointer'
         }
         this.state = {
+            likes: props.blog.likes,
             dropdownStyle: {
                 display: 'none'
             }
@@ -37,6 +40,19 @@ class Blog extends React.Component {
         }
     }
     
+    likeHandler = async (event) => {
+        const newBlog = {
+            title: this.props.blog.title,
+            author: this.props.blog.author,
+            url: this.props.blog.url,
+            likes: this.state.likes + 1
+        }
+        await blogService.update(newBlog, this.props.blog._id)
+        this.setState({
+            likes: this.state.likes + 1
+        })
+    }
+    
     render() {
         return (
             <div style={this.blogStyle}>
@@ -46,7 +62,7 @@ class Blog extends React.Component {
                 <div style={this.state.dropdownStyle}>
                     <span>{this.props.blog.url}</span>
                     <br />
-                    <span>{this.props.blog.likes} tykkäystä <button>tykkää</button></span>
+                    <span>{this.state.likes} tykkäystä <button onClick={this.likeHandler.bind(this)}>tykkää</button></span>
                     <br />
                     <span>blogin lisäsi {this.props.blog.user.username}</span>
                 </div>

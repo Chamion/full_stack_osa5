@@ -16,7 +16,14 @@ const addNew = async (blog, user) => {
     return res.data
 }
 
+const update = async (blog, id) => {
+    const url = baseUrl + '/' + id
+    const res = await axios.put(url, { blog })
+    return res.data
+}
+
 export default {
     getAll,
-    addNew
+    addNew,
+    update
 }

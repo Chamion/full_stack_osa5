@@ -55,7 +55,7 @@ class App extends React.Component {
         }
     }
     
-    handleLogout = (event) => {
+    handleLogout(event) {
         event.preventDefault()
         localStorage.removeItem('user')
         this.setState({
@@ -84,11 +84,11 @@ class App extends React.Component {
         }
     }
     
-    handleFieldChange = (event) => {
+    handleFieldChange(event) {
         this.setState({ [event.target.name]: event.target.value })
     }
     
-    showNotification = (notification, colour) => {
+    showNotification(notification, colour) {
         this.setState({
             notification,
             notificationColour: colour
@@ -98,7 +98,7 @@ class App extends React.Component {
         }, 5000)
     }
     
-    hideNotification = (notification) => {
+    hideNotification(notification) {
         if(this.state.notification === notification) {
             this.setState({
                 notification: null
@@ -106,7 +106,7 @@ class App extends React.Component {
         }
     }
     
-    toggleBoolean = (param) => {
+    toggleBoolean(param) {
         return () => {
             this.setState({
                 [param]: !this.state[param]
@@ -131,7 +131,7 @@ class App extends React.Component {
                     <h2>blogs</h2>
                     <div>
                         {this.state.blogs.map(blog => 
-                            <Blog key={blog._id} blog={blog}/>
+                            <Blog key={blog._id} blog={blog} />
                         )}
                     </div>
                 </div>
