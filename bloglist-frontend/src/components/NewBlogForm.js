@@ -20,7 +20,7 @@ const NewBlogForm = (props) => {
                     <br />
                     url: <input type='text' name='url' onChange={props.fieldChangeHandler} value={props.urlValue} />
                     <br />
-                    <input type='submit' value='send' />
+                    <input type='submit' value='lisää' />
                 </form>
             </div>
         </div>

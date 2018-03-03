@@ -4,11 +4,11 @@ const LoginForm = (props) => {
     return (
         <div>
             <form onSubmit={props.loginHandler}>
-                username: <input type='text' name='username' onChange={props.usernameChangeHandler} />
+                <span>käyttäjänimi: <input type='text' name='username' onChange={props.usernameChangeHandler} /></span>
                 <br />
-                password: <input type='password' name='password' onChange={props.passwordChangeHandler} />
+                <span>salasana: <input type='password' name='password' onChange={props.passwordChangeHandler} /></span>
                 <br />
-                <input type='submit' value='login' />
+                <input type='submit' value='kirjaudu sisään' />
             </form>
         </div>
     )
