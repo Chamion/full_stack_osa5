@@ -30,10 +30,10 @@ class App extends React.Component {
         }
     }
 
-    componentDidMount() {
-        blogService.getAll().then(blogs =>
-            this.setState({ blogs })
-        )
+    componentDidMount = async () => {
+        const blogs = await blogService.getAll()
+        this.setState({ blogs })
+        this.sortBlogs()
     }
     
     handleLogin = async (event) => {
@@ -113,6 +113,31 @@ class App extends React.Component {
             })
         }
     }
+    
+    blogLikeHandler(id) {
+        return () => {
+            const blogs = this.state.blogs.slice(0)
+            blogs.forEach(blog => {
+                if(blog._id === id) {
+                    blog.likes += 1
+                }
+            })
+            this.setState({
+                blogs
+            })
+            this.sortBlogs()
+        }
+    }
+    
+    sortBlogs = () => {
+        const blogs = this.state.blogs.slice(0)
+        blogs.sort((a, b) => {
+            return b.likes - a.likes
+        })
+        this.setState({
+            blogs
+        })
+    }
 
     render() {
         var body
@@ -130,9 +155,11 @@ class App extends React.Component {
                     />
                     <h2>blogs</h2>
                     <div>
-                        {this.state.blogs.map(blog => 
-                            <Blog key={blog._id} blog={blog} />
-                        )}
+                        {
+                            this.state.blogs.map(blog => 
+                                <Blog key={blog._id} blog={blog} likeCallback={this.blogLikeHandler(blog._id).bind(this)}/>
+                            )
+                        }
                     </div>
                 </div>
             )

@@ -45,12 +45,14 @@ class Blog extends React.Component {
             title: this.props.blog.title,
             author: this.props.blog.author,
             url: this.props.blog.url,
-            likes: this.state.likes + 1
+            likes: this.state.likes + 1,
+            user: this.props.blog.user._id
         }
         await blogService.update(newBlog, this.props.blog._id)
         this.setState({
             likes: this.state.likes + 1
         })
+        this.props.likeCallback()
     }
     
     render() {
