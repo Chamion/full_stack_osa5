@@ -25,7 +25,8 @@ class App extends React.Component {
             user,
             title: '',
             author: '',
-            url: ''
+            url: '',
+            collapseNewBlog: true
         }
     }
 
@@ -104,6 +105,14 @@ class App extends React.Component {
             })
         }
     }
+    
+    toggleBoolean = (param) => {
+        return () => {
+            this.setState({
+                [param]: !this.state[param]
+            })
+        }
+    }
 
     render() {
         var body
@@ -116,6 +125,8 @@ class App extends React.Component {
                     titleValue={this.state.title} 
                     authorValue={this.state.author} 
                     urlValue={this.state.url} 
+                    collapse={this.state.collapseNewBlog} 
+                    toggleHandler={this.toggleBoolean('collapseNewBlog')}
                     />
                     <h2>blogs</h2>
                     <table>
