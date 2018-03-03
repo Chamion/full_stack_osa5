@@ -60,6 +60,18 @@ class Blog extends React.Component {
     }
     
     render() {
+        var userPart
+        if(this.props.blog.user) {
+            userPart = (
+                <div>
+                    <span>blogin lisäsi {this.props.blog.user.username}</span>
+                </div>
+            )
+        } else {
+            userPart = (
+                <div></div>
+            )
+        }
         return (
             <div style={this.blogStyle}>
                 <div onClick={this.clickHandler.bind(this)} style={this.titleStyle}>
@@ -69,8 +81,7 @@ class Blog extends React.Component {
                     <span>{this.props.blog.url}</span>
                     <br />
                     <span>{this.state.likes} tykkäystä <button onClick={this.likeHandler.bind(this)}>tykkää</button></span>
-                    <br />
-                    <span>blogin lisäsi {this.props.blog.user.username}</span>
+                    {userPart}
                     <div style={this.removeStyle}>
                         <button onClick={this.props.removeCallback}>poista</button>
                     </div>

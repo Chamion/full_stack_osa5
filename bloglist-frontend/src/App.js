@@ -174,13 +174,20 @@ class App extends React.Component {
                     <h2>blogs</h2>
                     <div>
                         {
-                            this.state.blogs.map(blog => 
-                                <Blog key={blog._id} 
+                            this.state.blogs.map(blog => {
+                                var showRemove
+                                if(blog.user) {
+                                    showRemove = this.state.user.username === blog.user.username
+                                } else {
+                                    showRemove = true
+                                }
+                                return <Blog key={blog._id} 
                                 blog={blog} 
                                 likeCallback={this.blogLikeHandler(blog._id).bind(this)} 
                                 removeCallback={this.blogRemoveHandler(blog._id, blog.title).bind(this)} 
-                                showRemove={this.state.user.username === blog.user.username} 
+                                showRemove={showRemove} 
                                 />
+                                }
                             )
                         }
                     </div>
