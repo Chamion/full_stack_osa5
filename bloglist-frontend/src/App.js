@@ -72,6 +72,7 @@ class App extends React.Component {
                 author: this.state.author,
                 url: this.state.url
             }, this.state.user)
+            newBlog.user = this.state.user
             this.setState({
                 blogs: this.state.blogs.concat([newBlog]),
                 title: '',
@@ -138,6 +139,23 @@ class App extends React.Component {
             blogs
         })
     }
+    
+    blogRemoveHandler(id, title) {
+        return async () => {
+            if(!window.confirm('Poistetaanko \'' + title + '\'')) {
+                return
+            }
+            await blogService.remove(this.state.user, id)
+            const blogs = this.state.blogs.slice(0)
+            const index = blogs.findIndex(blog => {
+                return blog._id === id
+            })
+            blogs.splice(index, 1)
+            this.setState({
+                blogs
+            })
+        }
+    }
 
     render() {
         var body
@@ -157,7 +175,12 @@ class App extends React.Component {
                     <div>
                         {
                             this.state.blogs.map(blog => 
-                                <Blog key={blog._id} blog={blog} likeCallback={this.blogLikeHandler(blog._id).bind(this)}/>
+                                <Blog key={blog._id} 
+                                blog={blog} 
+                                likeCallback={this.blogLikeHandler(blog._id).bind(this)} 
+                                removeCallback={this.blogRemoveHandler(blog._id, blog.title).bind(this)} 
+                                showRemove={this.state.user.username === blog.user.username} 
+                                />
                             )
                         }
                     </div>

@@ -16,6 +16,10 @@ class Blog extends React.Component {
             width: '100%',
             cursor: 'pointer'
         }
+        this.removeStyle = {}
+        if(!props.showRemove) {
+            this.removeStyle.display = 'none'
+        }
         this.state = {
             likes: props.blog.likes,
             dropdownStyle: {
@@ -67,6 +71,9 @@ class Blog extends React.Component {
                     <span>{this.state.likes} tykkäystä <button onClick={this.likeHandler.bind(this)}>tykkää</button></span>
                     <br />
                     <span>blogin lisäsi {this.props.blog.user.username}</span>
+                    <div style={this.removeStyle}>
+                        <button onClick={this.props.removeCallback}>poista</button>
+                    </div>
                 </div>
             </div>  
         )

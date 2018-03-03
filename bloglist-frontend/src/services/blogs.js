@@ -22,8 +22,20 @@ const update = async (blog, id) => {
     return res.data
 }
 
+const remove = async (user, id) => {
+    const config = {
+        headers: {
+            'Authorization': 'bearer ' + user.token 
+        }
+    }
+    const url = baseUrl + '/' + id
+    const res = await axios.delete(url, config)
+    return res.data
+}
+
 export default {
     getAll,
     addNew,
-    update
+    update,
+    remove
 }
