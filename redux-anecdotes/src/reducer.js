@@ -37,8 +37,11 @@ const reducer = (state = initialState, action) => {
             }).sort((a, b) => {
                 return b.votes - a.votes
             })
+        case 'ADD':
+            return state.concat(asObject(action.anecdote))
+        default:
+            return state
     }
-    return state
 }
 
 export default reducer
