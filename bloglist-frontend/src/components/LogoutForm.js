@@ -1,20 +1,32 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const LogoutForm = (props) => {
-    const formStyle = {
-        'display': 'inline',
-        'marginLeft': '5px'
+class LogoutForm extends React.Component {
+    static propTypes = {
+        username: PropTypes.string.isRequired,
+        logoutHandler: PropTypes.func.isRequired
     }
-    return (
-        <div>
-            <span>
-                Olet kirjautunut käyttäjänä {props.username} 
-            </span>
-            <form onSubmit={props.logoutHandler} style={formStyle}>
-                <input type='submit' value='kirjaudu ulos' />
-            </form>
-        </div>
-    )
+    
+    constructor(props) {
+        super(props)
+        this.formStyle = {
+            'display': 'inline',
+            'marginLeft': '5px'
+        }
+    }
+    
+    render() {
+        return (
+            <div>
+                <span>
+                    Olet kirjautunut käyttäjänä {this.props.username} 
+                </span>
+                <form onSubmit={this.props.logoutHandler} style={this.formStyle}>
+                    <input type='submit' value='kirjaudu ulos' />
+                </form>
+            </div>
+        )
+    }
 }
 
 export default LogoutForm

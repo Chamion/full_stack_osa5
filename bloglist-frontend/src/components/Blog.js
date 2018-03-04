@@ -1,7 +1,15 @@
 import React from 'react'
 import blogService from '../services/blogs'
+import PropTypes from 'prop-types'
 
 class Blog extends React.Component {
+    static propTypes = {
+        blog: PropTypes.object.isRequired,
+        likeCallback: PropTypes.func.isRequired,
+        removeCallback: PropTypes.func.isRequired,
+        showRemove: PropTypes.bool.isRequired
+    }
+    
     constructor(props) {
         super(props)
         this.blogStyle = {

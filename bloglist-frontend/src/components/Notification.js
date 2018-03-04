@@ -1,25 +1,43 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const Notification = (props) => {
-    const outStyle = {
-        'padding': '5px',
-        'margin': '5px',
-        'backgroundColor': props.colour
+class Notification extends React.Component {
+    static propTypes = {
+        notification: PropTypes.string,
+        colour: PropTypes.string.isRequired
     }
-    const inStyle = {
-        'margin': '5px',
-        'backgroundColor': 'white'
+    
+    constructor(props) {
+        super(props)
+        this.inStyle = {
+            margin: 5,
+            paddingLeft: 10,
+            paddingRight: 10,
+            backgroundColor: 'white',
+            borderRadius: 10
+        }
     }
-    if(props.notification === null) {
-        outStyle['display'] = 'none'
+    
+    render() {
+        const outStyle = {
+            padding: 5,
+            paddingLeft: 10,
+            paddingRight: 10,
+            margin: 5,
+            backgroundColor: this.props.colour,
+            borderRadius: 20
+        }
+        if(this.props.notification === null) {
+            outStyle.display = 'none'
+        }
+        return (
+            <div style={outStyle}>
+                <p style={this.inStyle}>
+                    {this.props.notification}
+                </p>
+            </div>
+        )
     }
-    return (
-        <div style={outStyle}>
-            <p style={inStyle}>
-                {props.notification}
-            </p>
-        </div>
-    )
 }
 
 export default Notification

@@ -25,8 +25,7 @@ class App extends React.Component {
             user,
             title: '',
             author: '',
-            url: '',
-            collapseNewBlog: true
+            url: ''
         }
     }
 
@@ -168,8 +167,6 @@ class App extends React.Component {
                     titleValue={this.state.title} 
                     authorValue={this.state.author} 
                     urlValue={this.state.url} 
-                    collapse={this.state.collapseNewBlog} 
-                    toggleHandler={this.toggleBoolean('collapseNewBlog')}
                     />
                     <h2>blogs</h2>
                     <div>
@@ -197,8 +194,7 @@ class App extends React.Component {
             body = (
                 <div>
                     <LoginForm loginHandler={this.handleLogin.bind(this)} 
-                    passwordChangeHandler={this.handleFieldChange.bind(this)} 
-                    usernameChangeHandler={this.handleFieldChange.bind(this)} 
+                    fieldChangeHandler={this.handleFieldChange.bind(this)} 
                     />
                 </div>
             )
