@@ -25,5 +25,10 @@
     "jest": "^22.4.2",
     "jest-cli": "^22.4.2",
     "react-test-renderer": "^16.2.0"
+  },
+  "jest": {
+    "setupFiles": [
+        "<rootDir>/tests/setupTests.js"
+    ]
   }
 }

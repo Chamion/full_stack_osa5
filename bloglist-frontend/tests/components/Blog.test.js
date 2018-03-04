@@ -1,8 +1,3 @@
-import { configure } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-
-configure({ adapter: new Adapter() })
-
 import React from 'react'
 import { shallow } from 'enzyme'
 import Blog from '../../src/components/Blog'
@@ -39,6 +34,7 @@ describe('Blog', () => {
             expect(contentDiv.prop('style').display).toBe('none')
         })
     })
+    
     describe('After clicking name', () => {
         beforeAll(() => {
             const nameDiv = blogComponent.find('.name')
