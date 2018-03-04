@@ -5,8 +5,8 @@ import PropTypes from 'prop-types'
 class Blog extends React.Component {
     static propTypes = {
         blog: PropTypes.object.isRequired,
-        likeCallback: PropTypes.func.isRequired,
-        removeCallback: PropTypes.func.isRequired,
+        likeCallback: PropTypes.func,
+        removeCallback: PropTypes.func,
         showRemove: PropTypes.bool.isRequired
     }
     
@@ -82,10 +82,10 @@ class Blog extends React.Component {
         }
         return (
             <div style={this.blogStyle}>
-                <div onClick={this.clickHandler.bind(this)} style={this.titleStyle}>
+                <div onClick={this.clickHandler.bind(this)} style={this.titleStyle} className='name'>
                     <span>{this.props.blog.title} {this.props.blog.author}</span>
                 </div>
-                <div style={this.state.dropdownStyle}>
+                <div style={this.state.dropdownStyle} className='content'>
                     <span>{this.props.blog.url}</span>
                     <br />
                     <span>{this.state.likes} tykkäystä <button onClick={this.likeHandler.bind(this)}>tykkää</button></span>
