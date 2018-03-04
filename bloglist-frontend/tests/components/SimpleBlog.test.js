@@ -24,4 +24,23 @@ describe('SimpleBlog', () => {
         const likesDiv = simpleBlogComponent.find('.likes')
         expect(likesDiv.text()).toContain(blog.likes)
     })
+    
+    it('calls onClick when like-button is clicked', () => {
+        const blog = {
+            title: 'Test Title',
+            author: 'Test Author',
+            likes: 0
+        }
+        
+        const onClickFunction = () => {
+            blog.likes += 1
+        }
+
+        const simpleBlogComponent = shallow(<SimpleBlog blog={blog} onClick={onClickFunction} />)
+        const button = simpleBlogComponent.find('button')
+        button.simulate('click')
+        expect(blog.likes).toBe(1)
+        button.simulate('click')
+        expect(blog.likes).toBe(2)
+    })
 })
