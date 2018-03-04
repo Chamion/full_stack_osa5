@@ -34,6 +34,8 @@ const reducer = (state = initialState, action) => {
                 } else {
                     return anecdote
                 }
+            }).sort((a, b) => {
+                return b.votes - a.votes
             })
     }
     return state
